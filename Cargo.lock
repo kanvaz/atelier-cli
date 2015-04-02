@@ -1,4 +1,20 @@
 [root]
 name = "git-store"
 version = "0.0.1"
+dependencies = [
+ "clap 0.5.7 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "clap"
+version = "0.5.7"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+dependencies = [
+ "libc 0.1.4 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
+name = "libc"
+version = "0.1.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
 

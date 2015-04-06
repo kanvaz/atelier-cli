@@ -9,10 +9,16 @@ pub struct Repository<'a> {
     pub path: &'a str
 }
 
-#[derive(Debug)]
-pub struct FileData<'a> {
-    pub name: &'a str,
-    pub content: &'a str
+//TODO: Why can't we use Decodable/Encodable on &str
+#[derive(Debug, RustcDecodable, RustcEncodable)]
+pub struct FileData {
+    pub name: String,
+    pub content: String
+}
+
+#[derive(Debug, RustcDecodable, RustcEncodable)]
+pub struct FileSet {
+    pub files: Vec<FileData>
 }
 
 impl<'a> Repository<'a> {
@@ -32,7 +38,7 @@ impl<'a> Repository<'a> {
 
     pub fn add_files (&self, files: Vec<FileData>) {
         files.iter().all(|file_data| {
-            let path = Path::new(self.path).join(file_data.name);
+            let path = Path::new(self.path).join(&file_data.name);
             //FIXME: what's the best approach for error handling here?
             let mut file = File::create(&path).ok().unwrap();
             file.write(file_data.content.as_bytes()).ok();

@@ -3,6 +3,7 @@ name = "git-store"
 version = "0.0.1"
 dependencies = [
  "clap 0.5.7 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.10 (git+https://github.com/andersk/rustc-serialize.git?branch=io-error)",
 ]
 
 [[package]]
@@ -17,4 +18,9 @@ dependencies = [
 name = "libc"
 version = "0.1.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "rustc-serialize"
+version = "0.3.10"
+source = "git+https://github.com/andersk/rustc-serialize.git?branch=io-error#9a85b4b4280cd99b8f96b82da2e23f3fdebe4dd3"
 

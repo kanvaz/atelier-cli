@@ -5,3 +5,7 @@ authors = ["Christoph Burgdorf <christoph.burgdorf@bvsn.org>"]
 
 [dependencies]
 clap = "*"
+
+[dependencies.rustc-serialize]
+git = "https://github.com/andersk/rustc-serialize.git"
+branch = "io-error"

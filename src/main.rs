@@ -1,10 +1,11 @@
 extern crate clap;
-
+extern crate rustc_serialize;
 use clap::{App, Arg};
 //doesn't compile today, try tomorrow ;)
 //use uuid::Uuid;
 use git::{};
-use repository::{FileData};
+use repository::{FileData, FileSet};
+use rustc_serialize::json;
 
 mod git;
 mod repository;
@@ -27,17 +28,31 @@ fn main() {
         .arg(Arg::new("data")
             .short("d")
             .long("data")
-            .help("e.g. { \"files\": { \"style.css\": \"button: { color: red; }\", \"app.js\": \"alert('foo');\" } }")
+            .help("e.g. \"{ \"files\": [{ \"name\":\"style.css\", \"content\": \"button: { color: red; }\", \"app.js\": \"alert('foo');\" }] }")
             .takes_value(true))
         .get_matches();
 
     let repository = git::init("foo").unwrap();
+    let test_data = "{ \"files\": [{ \"name\":\"style.css\", \"content\": \"button: { color: red; }\", \"app.js\": \"alert('foo');\" }] }";
 
-    repository.add_files(vec!(
-        FileData { name: "foo.txt", content: "foobar" },
-        FileData { name: "bar.txt", content: "bar" },
-    ));
+    let file_set = matches.value_of("data").map(|data| {
+        let file_set:FileSet = json::decode(data).ok().expect("invalid data provided");
+        file_set
+    });
 
-    repository.commit_all();
+
+
+    println!("{:?}", file_set);
+
+    //let file_set:FileSet = json::decode(test_data).unwrap();
+
+    match file_set {
+        Some(file_set) => repository.add_files(file_set.files),
+        _ => ()
+    }
+
+    //repository.add_files(file_set.files);
+    //
+    // repository.commit_all();
     println!("Look into the foo directory");
 }

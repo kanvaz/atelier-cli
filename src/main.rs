@@ -1,8 +1,9 @@
 extern crate clap;
 extern crate rustc_serialize;
+extern crate uuid;
+
 use clap::{App, Arg};
-//doesn't compile today, try tomorrow ;)
-//use uuid::Uuid;
+use uuid::Uuid;
 use git::{};
 use repository::{FileData, FileSet};
 use rustc_serialize::json;
@@ -32,7 +33,15 @@ fn main() {
             .takes_value(true))
         .get_matches();
 
-    let repository = git::init("foo").unwrap();
+    //FIXME: can we move this?
+    let repository_name = String::new() + "temp_rep" + &Uuid::new_v4().to_simple_string();
+
+    let repository = if matches.is_present("init") {
+        git::init(&repository_name).unwrap()
+    } else {
+        panic!("missing --init argument");
+    };
+
     let test_data = "{ \"files\": [{ \"name\":\"style.css\", \"content\": \"button: { color: red; }\", \"app.js\": \"alert('foo');\" }] }";
 
     let file_set = matches.value_of("data").map(|data| {
@@ -40,19 +49,13 @@ fn main() {
         file_set
     });
 
-
-
     println!("{:?}", file_set);
 
-    //let file_set:FileSet = json::decode(test_data).unwrap();
 
     match file_set {
-        Some(file_set) => repository.add_files(file_set.files),
+        Some(file_set) => { repository.add_files(file_set.files); repository.commit_all(); },
         _ => ()
     }
 
-    //repository.add_files(file_set.files);
-    //
-    // repository.commit_all();
-    println!("Look into the foo directory");
+    println!("Look into the {:0} directory", repository_name);
 }

@@ -50,12 +50,10 @@ fn main() {
 
     let test_data = "{ \"files\": [{ \"name\":\"style.css\", \"content\": \"button: { color: red; }\"}] }";
 
-    //FIXME: Gives me a sad face to break the chaining
-    let file_set = matches.value_of("data")
+    matches.value_of("data")
             .map(FileSet::from_json)
+            .map(|file_set| { repository.add_files_and_commit(file_set.files) })
             .expect("--data is mandatory");
-
-    repository.add_files_and_commit(file_set.files);
 
     println!("Look into the {:0} directory", repository.path);
 }

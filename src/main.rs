@@ -40,17 +40,10 @@ fn main() {
             .takes_value(true))
         .get_matches();
 
-    //FIXME: let's probably move this code into the repository
-    let repository_name;
-    let update_repository;
     let repository = if matches.is_present("init") {
-        repository_name = Repository::generate_path(&Uuid::new_v4().to_simple_string());
-        git::init(&repository_name).unwrap()
+        get_repository_handle(None)
     } else if matches.is_present("update-set") {
-        update_repository = Repository::generate_path(matches.value_of("update-set").unwrap());
-        Repository {
-            path: &update_repository
-        }
+        get_repository_handle(matches.value_of("update-set"))
     } else {
         panic!("Either --init or --update-set must be used")
     };
@@ -64,11 +57,23 @@ fn main() {
 
     println!("{:?}", file_set);
 
-
     match file_set {
         Some(file_set) => { repository.add_files(file_set.files); repository.commit_all(); },
         _ => ()
     }
 
     println!("Look into the {:0} directory", repository.path);
+}
+fn get_repository_handle (id: Option<&str>) -> Repository {
+    match id {
+        None => {
+            //why doesn't this yield lifetime issues?
+            git::init(&Repository::generate_path(&Uuid::new_v4().to_simple_string())).unwrap()
+        },
+        Some(id) => {
+            Repository {
+                path: Repository::generate_path(id)
+            }
+        }
+    }
 }

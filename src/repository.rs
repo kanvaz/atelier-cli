@@ -5,8 +5,8 @@ use std::fs::File;
 use std::io::Write;
 
 #[derive(Debug)]
-pub struct Repository<'a> {
-    pub path: &'a str
+pub struct Repository {
+    pub path: String
 }
 
 //TODO: Why can't we use Decodable/Encodable on &str
@@ -21,7 +21,7 @@ pub struct FileSet {
     pub files: Vec<FileData>
 }
 
-impl<'a> Repository<'a> {
+impl Repository {
 
     pub fn generate_path (id: &str) -> String {
         String::new() + "temp_rep" + id
@@ -29,7 +29,7 @@ impl<'a> Repository<'a> {
 
     pub fn commit_all (&self) -> String {
         let output = Command::new("git")
-                .current_dir(Path::new(self.path))
+                .current_dir(Path::new(&self.path))
                 //FIXME: don't rely on custom alias
                 .arg("ca")
                 .arg("-m \"foo\"")
@@ -42,7 +42,7 @@ impl<'a> Repository<'a> {
 
     pub fn add_files (&self, files: Vec<FileData>) {
         files.iter().all(|file_data| {
-            let path = Path::new(self.path).join(&file_data.name);
+            let path = Path::new(&self.path).join(&file_data.name);
             //FIXME: what's the best approach for error handling here?
             let mut file = File::create(&path).ok().unwrap();
             file.write(file_data.content.as_bytes()).ok();

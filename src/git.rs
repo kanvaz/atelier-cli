@@ -1,6 +1,7 @@
 use std::process::Command;
 use std::io::Error;
 use repository::Repository;
+use std::borrow::ToOwned;
 
 pub fn init (name: &str) -> Result<Repository, Error> {
     Command::new("git")
@@ -8,6 +9,6 @@ pub fn init (name: &str) -> Result<Repository, Error> {
             .arg(name)
             .output()
             .map(|_| Repository {
-                path: name
+                path: name.to_owned()
             })
 }

@@ -55,5 +55,5 @@ fn main() {
             .map(|file_set| { repository.add_files_and_commit(file_set.files) })
             .expect("--data is mandatory");
 
-    println!("Look into the {:0} directory", repository.path);
+    println!("Repository created at ./{:0}", repository.path);
 }

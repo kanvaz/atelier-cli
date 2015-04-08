@@ -36,7 +36,9 @@ fn main() {
         .arg(Arg::new("data")
             .short("d")
             .long("data")
-            .help("e.g. \"{ \"files\": [{ \"name\":\"style.css\", \"content\": \"button: { color: red; }\", \"app.js\": \"alert('foo');\" }] }")
+            //atom doesn_t seem to handle raw strings pretty well
+            //call with --data='{ "files": [{ "name":"style.css", "content": "button: { color: red; }"}] }'
+            .help(r#"e.g. { "files": [{ "name":"style.css", "content": "button: { color: red; }"}] }"#)
             .takes_value(true))
         .get_matches();
 
@@ -47,8 +49,6 @@ fn main() {
     } else {
         panic!("Either --init or --update-set must be used")
     };
-
-    let test_data = "{ \"files\": [{ \"name\":\"style.css\", \"content\": \"button: { color: red; }\"}] }";
 
     matches.value_of("data")
             .map(FileSet::from_json)

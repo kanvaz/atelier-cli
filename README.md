@@ -10,7 +10,7 @@ It's a simple CLI tool with a couple of commands that take/return JSON as a comm
 
 Here is how a new file set is created.
 
-`git-store --init --remote="https://github.com/thoughtram-editor/index.git" --push --data="{ "files": { "style.css": "button: { color: red; }", "app.js": "alert('foo');" } }"`
+`git-store --init --remote="https://github.com/thoughtram-editor/index.git" --push --data="{ "files": [{ "name":"style.css", "content": "button: { color: red; }"}] }"`
 
 Behind the scenes, it first creates a new uniqie id (`47f6B` in our example) and then runs `git init 47f6B && cd 47f6B`.
 It then walks through the file data provided by the `--data` parameter and creates the actual files in the working directory.
@@ -35,7 +35,7 @@ If the `--push` paramter is provided it will automatically run `git push origin 
 
 Here is how an existing fileset is updated.
 
-`git-store --update-set="47f6B" --push --data="{ "files": { "style.css": "button: { color: red; }", "app.js": "alert('foo');" } }"`
+`git-store --repository-id="47f6B" --push --data="{ "files": [{ "name":"style.css", "content": "button: { color: red; }"}] }"`
 
 Behind the scenes it first `cd`s into the `47f6B`.
 It then walks through the file data provided by the `--data` parameter and creates/overwrites the actual files in the working directory.

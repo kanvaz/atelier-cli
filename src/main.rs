@@ -25,14 +25,14 @@ fn main() {
         .arg(Arg::new("init")
             .short("i")
             .long("init")
-            .mutually_excludes("update-set")
+            .mutually_excludes("repository-id")
             .help("if present, data should create new repository"))
-        .arg(Arg::new("update-set")
-            .short("u")
-            .long("update-set")
+        .arg(Arg::new("repository-id")
+            .short("r")
+            .long("repository-id")
             .mutually_excludes("init")
             .takes_value(true)
-            .help(r#"updates existing set eg --update-set="4711""#))
+            .help(r#"updates existing repository e.g. --repository-id="4711""#))
         .arg(Arg::new("data")
             .short("d")
             .long("data")
@@ -44,10 +44,10 @@ fn main() {
 
     let repository = if matches.is_present("init") {
         repository_locator::get_repository_handle(RepositoryState::NonExisting)
-    } else if matches.is_present("update-set") {
-        repository_locator::get_repository_handle(RepositoryState::Existing(matches.value_of("update-set").unwrap()))
+    } else if matches.is_present("repository-id") {
+        repository_locator::get_repository_handle(RepositoryState::Existing(matches.value_of("repository-id").unwrap()))
     } else {
-        panic!("Either --init or --update-set must be used")
+        panic!("Either --init or --repository-id must be used")
     };
 
     matches.value_of("data")

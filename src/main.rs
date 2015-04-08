@@ -49,7 +49,7 @@ fn main() {
         panic!("Either --init or --update-set must be used")
     };
 
-    let test_data = "{ \"files\": [{ \"name\":\"style.css\", \"content\": \"button: { color: red; }\", \"app.js\": \"alert('foo');\" }] }";
+    let test_data = "{ \"files\": [{ \"name\":\"style.css\", \"content\": \"button: { color: red; }\"}] }";
 
     //FIXME: Gives me a sad face to break the chaining
     let file_set = matches.value_of("data")

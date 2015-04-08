@@ -38,4 +38,9 @@ impl Repository {
             true
         });
     }
+
+    pub fn add_files_and_commit (&self, files: Vec<FileData>) {
+        self.add_files(files);
+        self.commit_all();
+    }
 }

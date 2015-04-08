@@ -57,8 +57,7 @@ fn main() {
             .map(FileSet::from_json)
             .expect("--data is mandatory");
 
-    repository.add_files(file_set.files);
-    repository.commit_all();
+    repository.add_files_and_commit(file_set.files);
 
     println!("Look into the {:0} directory", repository.path);
 }

@@ -5,9 +5,8 @@ extern crate uuid;
 use clap::{App, Arg};
 use uuid::Uuid;
 use git::{};
-use file_set:: { FileSet, FileData };
+use file_set:: { FileSet };
 use repository::{ Repository };
-use rustc_serialize::json;
 
 mod git;
 mod repository;

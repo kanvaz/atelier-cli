@@ -3,13 +3,12 @@ extern crate rustc_serialize;
 extern crate uuid;
 
 use clap::{App, Arg};
-use uuid::Uuid;
 use git::{};
+use repository_locator::{};
 use file_set:: { FileSet };
-use repository::{ Repository };
-
 mod git;
 mod repository;
+mod repository_locator;
 mod file_set;
 
 fn main() {
@@ -42,9 +41,9 @@ fn main() {
         .get_matches();
 
     let repository = if matches.is_present("init") {
-        get_repository_handle(None)
+        repository_locator::get_repository_handle(None)
     } else if matches.is_present("update-set") {
-        get_repository_handle(matches.value_of("update-set"))
+        repository_locator::get_repository_handle(matches.value_of("update-set"))
     } else {
         panic!("Either --init or --update-set must be used")
     };
@@ -59,17 +58,4 @@ fn main() {
     repository.add_files_and_commit(file_set.files);
 
     println!("Look into the {:0} directory", repository.path);
-}
-fn get_repository_handle (id: Option<&str>) -> Repository {
-    match id {
-        None => {
-            //why doesn't this yield lifetime issues?
-            git::init(&Repository::generate_path(&Uuid::new_v4().to_simple_string())).unwrap()
-        },
-        Some(id) => {
-            Repository {
-                path: Repository::generate_path(id)
-            }
-        }
-    }
 }

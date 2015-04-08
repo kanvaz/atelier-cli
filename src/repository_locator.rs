@@ -2,13 +2,18 @@ use uuid::Uuid;
 use repository::Repository;
 use git::{self};
 
-pub fn get_repository_handle (id: Option<&str>) -> Repository {
+pub enum RepositoryState<'a> {
+    NonExisting,
+    Existing(&'a str)
+}
+
+pub fn get_repository_handle (id: RepositoryState) -> Repository {
     match id {
-        None => {
+        RepositoryState::NonExisting => {
             //why doesn't this yield lifetime issues?
             git::init(&Repository::generate_path(&Uuid::new_v4().to_simple_string())).unwrap()
         },
-        Some(id) => {
+        RepositoryState::Existing(id) => {
             Repository {
                 path: Repository::generate_path(id)
             }

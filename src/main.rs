@@ -4,7 +4,7 @@ extern crate uuid;
 
 use clap::{App, Arg};
 use git::{};
-use repository_locator::{};
+use repository_locator::{ RepositoryState };
 use file_set:: { FileSet };
 mod git;
 mod repository;
@@ -41,9 +41,9 @@ fn main() {
         .get_matches();
 
     let repository = if matches.is_present("init") {
-        repository_locator::get_repository_handle(None)
+        repository_locator::get_repository_handle(RepositoryState::NonExisting)
     } else if matches.is_present("update-set") {
-        repository_locator::get_repository_handle(matches.value_of("update-set"))
+        repository_locator::get_repository_handle(RepositoryState::Existing(matches.value_of("update-set").unwrap()))
     } else {
         panic!("Either --init or --update-set must be used")
     };

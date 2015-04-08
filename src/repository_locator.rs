@@ -7,16 +7,21 @@ pub enum RepositoryState<'a> {
     Existing(&'a str)
 }
 
+static REPO_PREFIX :&'static str = "TEMP_REP_";
+
 pub fn get_repository_handle (id: RepositoryState) -> Repository {
     match id {
         RepositoryState::NonExisting => {
-            //why doesn't this yield lifetime issues?
-            git::init(&Repository::generate_path(&Uuid::new_v4().to_simple_string())).unwrap()
+            git::init(&generate_path(&Uuid::new_v4().to_simple_string())).unwrap()
         },
         RepositoryState::Existing(id) => {
             Repository {
-                path: Repository::generate_path(id)
+                path: generate_path(id)
             }
         }
     }
+}
+
+pub fn generate_path (id: &str) -> String {
+    String::new() + REPO_PREFIX + id
 }

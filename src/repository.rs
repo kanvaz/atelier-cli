@@ -12,10 +12,6 @@ pub struct Repository {
 
 impl Repository {
 
-    pub fn generate_path (id: &str) -> String {
-        String::new() + "temp_rep" + id
-    }
-
     pub fn commit_all (&self) -> String {
         let output = Command::new("git")
                 .current_dir(Path::new(&self.path))

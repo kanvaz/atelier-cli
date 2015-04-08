@@ -3,22 +3,11 @@ use std::borrow::ToOwned;
 use std::path::Path;
 use std::fs::File;
 use std::io::Write;
+use file_set::FileData;
 
 #[derive(Debug)]
 pub struct Repository {
     pub path: String
-}
-
-//TODO: Why can't we use Decodable/Encodable on &str
-#[derive(Debug, RustcDecodable, RustcEncodable)]
-pub struct FileData {
-    pub name: String,
-    pub content: String
-}
-
-#[derive(Debug, RustcDecodable, RustcEncodable)]
-pub struct FileSet {
-    pub files: Vec<FileData>
 }
 
 impl Repository {

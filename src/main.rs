@@ -5,11 +5,13 @@ extern crate uuid;
 use clap::{App, Arg};
 use uuid::Uuid;
 use git::{};
-use repository::{FileData, FileSet, Repository};
+use file_set:: { FileSet, FileData };
+use repository::{ Repository };
 use rustc_serialize::json;
 
 mod git;
 mod repository;
+mod file_set;
 
 fn main() {
 
@@ -50,17 +52,13 @@ fn main() {
 
     let test_data = "{ \"files\": [{ \"name\":\"style.css\", \"content\": \"button: { color: red; }\", \"app.js\": \"alert('foo');\" }] }";
 
-    let file_set = matches.value_of("data").map(|data| {
-        let file_set:FileSet = json::decode(data).ok().expect("invalid data provided");
-        file_set
-    });
+    //FIXME: Gives me a sad face to break the chaining
+    let file_set = matches.value_of("data")
+            .map(FileSet::from_json)
+            .expect("--data is mandatory");
 
-    println!("{:?}", file_set);
-
-    match file_set {
-        Some(file_set) => { repository.add_files(file_set.files); repository.commit_all(); },
-        _ => ()
-    }
+    repository.add_files(file_set.files);
+    repository.commit_all();
 
     println!("Look into the {:0} directory", repository.path);
 }

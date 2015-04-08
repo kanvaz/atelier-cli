@@ -32,7 +32,7 @@ fn main() {
             .long("update-set")
             .mutually_excludes("init")
             .takes_value(true)
-            .help("updates existing set eg --update-set=\"4711\""))
+            .help(r#"updates existing set eg --update-set="4711""#))
         .arg(Arg::new("data")
             .short("d")
             .long("data")

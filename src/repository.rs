@@ -2,7 +2,7 @@ use std::process::Command;
 use std::borrow::ToOwned;
 use std::path::Path;
 use std::fs::{self, File};
-use std::io::{Read,Write};
+use std::io::{Write};
 use file_set::FileData;
 use readext::ReadExt;
 

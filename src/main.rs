@@ -41,6 +41,10 @@ fn main() {
             //call with --data='{ "files": [{ "name":"style.css", "content": "button: { color: red; }"}] }'
             .help(r#"e.g. { "files": [{ "name":"style.css", "content": "button: { color: red; }"}] }"#)
             .takes_value(true))
+        .arg(Arg::new("pretty")
+            .long("pretty")
+            .short("p")
+            .help("pretty print all output"))
         .get_matches();
 
     let repository = if matches.is_present("init") {
@@ -61,6 +65,11 @@ fn main() {
 
     //if --data wasn't specified we have a read operation
     if !matches.is_present("data") {
-        println!("{}", FileSet { files: repository.read_all_files() }.to_json() );
+        let file_set = FileSet { files: repository.read_all_files() };
+
+        match matches.is_present("pretty") {
+            true => println!("{}", file_set.to_pretty_json()),
+            false => println!("{}", file_set.to_json())
+        }
     }
 }

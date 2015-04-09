@@ -6,6 +6,7 @@ authors = ["Christoph Burgdorf <christoph.burgdorf@bvsn.org>"]
 [dependencies]
 clap = "*"
 uuid = "*"
+readext = "*"
 
 [dependencies.rustc-serialize]
 git = "https://github.com/andersk/rustc-serialize.git"

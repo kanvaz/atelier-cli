@@ -50,10 +50,14 @@ fn main() {
         panic!("Either --init or --repository-id must be used")
     };
 
+    //if --data was specified
     matches.value_of("data")
             .map(FileSet::from_json)
-            .map(|file_set| { repository.add_files_and_commit(file_set.files) })
-            .expect("--data is mandatory");
+            .map(|file_set| { repository.add_files_and_commit(file_set.files) });
+
+    //it --data wasn't specified we have a read operation
+
+    println!("{:?}", repository.read_all_files());
 
     println!("Repository created at ./{:0}", repository.path);
 }

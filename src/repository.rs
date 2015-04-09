@@ -1,14 +1,18 @@
 use std::process::Command;
 use std::borrow::ToOwned;
 use std::path::Path;
-use std::fs::File;
-use std::io::Write;
+use std::fs::{self, File};
+use std::io::{Read,Write};
 use file_set::FileData;
+use readext::ReadExt;
 
 #[derive(Debug)]
 pub struct Repository {
     pub path: String
 }
+
+
+static BLACKLIST: [&'static str; 2] = [".git", ".DS_Store"];
 
 impl Repository {
 
@@ -38,5 +42,23 @@ impl Repository {
     pub fn add_files_and_commit (&self, files: Vec<FileData>) {
         self.add_files(files);
         self.commit_all();
+    }
+
+    pub fn read_all_files(&self) -> Vec<FileData> {
+        fs::read_dir(Path::new(&self.path))
+            .map(|iter| {
+                iter
+                .filter_map(|entry| entry.ok())
+                .map(|entry| entry.path())
+                .map(|path| {
+                    FileData {
+                        name: path.as_path().file_name().map_or("", |f| f.to_str().unwrap_or("")).to_string(),
+                        content: File::open(path.as_path()).and_then(|mut f| f.read_into_string()).unwrap_or(String::new())
+                    }
+                })
+                .filter(|file_data| file_data.name.len() > 0 && !BLACKLIST.iter().any(|b| *b == file_data.name))
+                .collect()
+            })
+            .unwrap_or(vec!())
     }
 }

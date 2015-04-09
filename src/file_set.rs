@@ -18,4 +18,12 @@ impl FileSet {
         let file_set:FileSet = json::decode(json).ok().expect("invalid data provided");
         file_set
     }
+
+    pub fn to_json (&self) -> String {
+        format!("{}", json::as_json(&self))
+    }
+
+    pub fn to_pretty_json (&self) -> String {
+        format!("{}", json::as_pretty_json(&self))
+    }
 }

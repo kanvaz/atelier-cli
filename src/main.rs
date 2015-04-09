@@ -1,6 +1,7 @@
 extern crate clap;
 extern crate rustc_serialize;
 extern crate uuid;
+extern crate readext;
 
 use clap::{App, Arg};
 use git::{};

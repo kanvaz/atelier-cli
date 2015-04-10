@@ -1,20 +1,11 @@
 extern crate clap;
-extern crate rustc_serialize;
-extern crate uuid;
-extern crate readext;
+extern crate git_grid;
 
 use clap::{App, Arg};
-use git::{};
-use repository_locator::{ RepositoryState };
-use file_set:: { FileSet };
-mod git;
-mod repository;
-mod repository_locator;
-mod file_set;
+use git_grid::file_set::{ FileSet };
+use git_grid::repository_locator::{ self, RepositoryState };
 
 fn main() {
-
-    // Pull version from Cargo.toml
     let version = format!("{}.{}.{}{}",
                           env!("CARGO_PKG_VERSION_MAJOR"),
                           env!("CARGO_PKG_VERSION_MINOR"),

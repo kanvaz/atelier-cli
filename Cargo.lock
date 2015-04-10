@@ -3,15 +3,24 @@ name = "git-store"
 version = "0.0.1"
 dependencies = [
  "clap 0.5.14 (registry+https://github.com/rust-lang/crates.io-index)",
- "readext 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
- "rustc-serialize 0.3.10 (git+https://github.com/andersk/rustc-serialize.git?branch=io-error)",
- "uuid 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)",
+ "git-grid 0.0.1 (git+https://github.com/thoughtram-editor/git-grid.git)",
 ]
 
 [[package]]
 name = "clap"
 version = "0.5.14"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "git-grid"
+version = "0.0.1"
+source = "git+https://github.com/thoughtram-editor/git-grid.git#43ecffe022a11185cb0dd6c2e795e2fdfd6a432a"
+dependencies = [
+ "clap 0.5.14 (registry+https://github.com/rust-lang/crates.io-index)",
+ "readext 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "rustc-serialize 0.3.12 (registry+https://github.com/rust-lang/crates.io-index)",
+ "uuid 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "libc"
@@ -39,11 +48,6 @@ dependencies = [
 name = "readext"
 version = "0.1.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-
-[[package]]
-name = "rustc-serialize"
-version = "0.3.10"
-source = "git+https://github.com/andersk/rustc-serialize.git?branch=io-error#9a85b4b4280cd99b8f96b82da2e23f3fdebe4dd3"
 
 [[package]]
 name = "rustc-serialize"

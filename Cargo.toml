@@ -5,9 +5,7 @@ authors = ["Christoph Burgdorf <christoph.burgdorf@bvsn.org>"]
 
 [dependencies]
 clap = "*"
-uuid = "*"
-readext = "*"
 
-[dependencies.rustc-serialize]
-git = "https://github.com/andersk/rustc-serialize.git"
-branch = "io-error"
+[dependencies.git-grid]
+# git = "file:/Users/cburgdorf/Documents/hacking/git-grid"
+git = "https://github.com/thoughtram-editor/git-grid.git"

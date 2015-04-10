@@ -20,7 +20,6 @@ impl Repository {
     pub fn stage_all (&self) -> String {
         let output = Command::new("git")
                 .current_dir(Path::new(&self.path))
-                //FIXME: don't rely on custom alias
                 .arg("add")
                 .arg("-A")
                 .output()
@@ -33,7 +32,6 @@ impl Repository {
     pub fn commit_all (&self, message: &str) -> String {
         let output = Command::new("git")
                 .current_dir(Path::new(&self.path))
-                //FIXME: don't rely on custom alias
                 .arg("commit")
                 .arg(format!("-m {0}", message))
                 .output()
@@ -46,9 +44,11 @@ impl Repository {
     pub fn add_files (&self, files: Vec<FileData>) {
         files.iter().all(|file_data| {
             let path = Path::new(&self.path).join(&file_data.name);
-            //FIXME: what's the best approach for error handling here?
-            let mut file = File::create(&path).ok().unwrap();
-            file.write(file_data.content.as_bytes()).ok();
+            File::create(&path)
+                .and_then(|mut file| {
+                    file.write(file_data.content.as_bytes())
+                }).ok();
+
             true
         });
     }

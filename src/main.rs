@@ -61,7 +61,7 @@ fn main() {
     matches.value_of("data")
             .map(FileSet::from_json)
             .map(|file_set| {
-                repository.add_files_and_commit(file_set.files);
+                repository.add_files_and_commit(file_set.files, "SAVEPOINT");
                 println!("Repository created or updated at ./{:0}", repository.path)
             });
 

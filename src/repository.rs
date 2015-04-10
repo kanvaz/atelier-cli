@@ -16,14 +16,28 @@ static BLACKLIST: [&'static str; 2] = [".git", ".DS_Store"];
 
 impl Repository {
 
-    pub fn commit_all (&self) -> String {
+
+    pub fn stage_all (&self) -> String {
         let output = Command::new("git")
                 .current_dir(Path::new(&self.path))
                 //FIXME: don't rely on custom alias
-                .arg("ca")
-                .arg("-m \"foo\"")
+                .arg("add")
+                .arg("-A")
                 .output()
-                .unwrap_or_else(|e| panic!("Failed to run git init with error: {}",e));
+                .unwrap_or_else(|e| panic!("Failed to run git add -A with error: {}",e));
+        let buf = String::from_utf8_lossy(&output.stdout);
+
+        buf.trim_matches('\n').to_owned()
+    }
+
+    pub fn commit_all (&self, message: &str) -> String {
+        let output = Command::new("git")
+                .current_dir(Path::new(&self.path))
+                //FIXME: don't rely on custom alias
+                .arg("commit")
+                .arg(format!("-m {0}", message))
+                .output()
+                .unwrap_or_else(|e| panic!("Failed to run git commit -m with error: {}",e));
         let buf = String::from_utf8_lossy(&output.stdout);
 
         buf.trim_matches('\n').to_owned()
@@ -39,9 +53,10 @@ impl Repository {
         });
     }
 
-    pub fn add_files_and_commit (&self, files: Vec<FileData>) {
+    pub fn add_files_and_commit (&self, files: Vec<FileData>, message: &str) {
         self.add_files(files);
-        self.commit_all();
+        self.stage_all();
+        self.commit_all(message);
     }
 
     pub fn read_all_files(&self) -> Vec<FileData> {

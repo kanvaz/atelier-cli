@@ -52,7 +52,9 @@ fn main() {
     } else if matches.is_present("repository-id") {
         repository_locator::get_repository_handle(RepositoryState::Existing(matches.value_of("repository-id").unwrap()))
     } else {
-        panic!("Either --init or --repository-id must be used. Run --help for more info.");
+        println!("{}", matches.usage());
+        println!("use --help for more info");
+        std::process::exit(1);
     };
 
     //if --data was specified

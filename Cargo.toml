@@ -1,5 +1,5 @@
 [package]
-name = "git-store"
+name = "git-grid-cli"
 version = "0.0.1"
 authors = ["Christoph Burgdorf <christoph.burgdorf@bvsn.org>"]
 

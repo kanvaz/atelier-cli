@@ -1,4 +1,4 @@
-# git-store
+# git-grid-cli
 
 This is a prototype of an experimental git/github based storage approach for the edtior that is implemented in Rust. It's a simple CLI tool that can easily be wrapped by a node process to expose it as a web API.
 

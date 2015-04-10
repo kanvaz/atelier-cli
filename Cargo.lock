@@ -1,5 +1,5 @@
 [root]
-name = "git-store"
+name = "git-grid-cli"
 version = "0.0.1"
 dependencies = [
  "clap 0.5.14 (registry+https://github.com/rust-lang/crates.io-index)",

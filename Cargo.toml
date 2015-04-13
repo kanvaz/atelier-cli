@@ -1,5 +1,5 @@
 [package]
-name = "git-grid-cli"
+name = "atelier-cli"
 version = "0.0.1"
 authors = ["Christoph Burgdorf <christoph.burgdorf@bvsn.org>"]
 
@@ -7,5 +7,5 @@ authors = ["Christoph Burgdorf <christoph.burgdorf@bvsn.org>"]
 clap = "*"
 
 [dependencies.git-grid]
-# git = "file:/Users/cburgdorf/Documents/hacking/git-grid"
-git = "https://github.com/thoughtram-editor/git-grid.git"
+# git = "file:/Users/cburgdorf/Documents/hacking/atelier"
+git = "https://github.com/thoughtram-editor/atelier.git"

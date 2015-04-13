@@ -1,9 +1,9 @@
 extern crate clap;
-extern crate git_grid;
+extern crate atelier;
 
 use clap::{App, Arg};
-use git_grid::file_set::{ FileSet };
-use git_grid::repository_locator::{ self, RepositoryState };
+use atelier::file_set::{ FileSet };
+use atelier::repository_locator::{ self, RepositoryState };
 
 fn main() {
     let version = format!("{}.{}.{}{}",

@@ -6,6 +6,6 @@ authors = ["Christoph Burgdorf <christoph.burgdorf@bvsn.org>"]
 [dependencies]
 clap = "*"
 
-[dependencies.git-grid]
+[dependencies.atelier]
 # git = "file:/Users/cburgdorf/Documents/hacking/atelier"
-git = "https://github.com/thoughtram-editor/atelier.git"
+git = "https://github.com/kanvaz/atelier.git"

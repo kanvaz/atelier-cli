@@ -3,15 +3,15 @@ name = "atelier-cli"
 version = "0.0.1"
 dependencies = [
  "atelier 0.0.1 (git+https://github.com/kanvaz/atelier.git)",
- "clap 0.5.14 (registry+https://github.com/rust-lang/crates.io-index)",
+ "clap 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
 name = "atelier"
 version = "0.0.1"
-source = "git+https://github.com/kanvaz/atelier.git#3bbb463db2afd909d6f8cd43dbd17cd57bb11992"
+source = "git+https://github.com/kanvaz/atelier.git#a97ec9fea290f3955e8a51bd0d93293510f68cf6"
 dependencies = [
- "clap 0.5.14 (registry+https://github.com/rust-lang/crates.io-index)",
+ "clap 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "readext 0.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "rustc-serialize 0.3.12 (registry+https://github.com/rust-lang/crates.io-index)",
  "uuid 0.1.16 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -19,7 +19,7 @@ dependencies = [
 
 [[package]]
 name = "clap"
-version = "0.5.14"
+version = "0.6.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
